@@ -14,11 +14,14 @@ Simply create a bookmark with the following URL.
 javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/offline.js';t.appendChild(s);})();
 ```
 
-Open your Rdio collection in Chrome and make sure you're listing all songs (the URL should be of the form 
-<i>/people/<i>username</i>/collection/songs/</i>). When the page has loaded, click the
-bookmarklet, sit back and relax, and watch as all of your songs are marked as available offline! To throttle
-the requests my script makes to Rdio, you should expect this to process to take awhile. 1,000 songs might take
-3-5 minutes.
+Open your Rdio collection in Chrome and make sure you're listing all songs (not albums; the URL should end in `/songs/`). 
+When the page has loaded, click the bookmarklet, sit back and relax, and watch as all of your songs are
+marked as available offline! Note that you can either use the script looking at <i>All Artists</i> or for a specific
+artist.
+
+To throttle the requests my script makes to Rdio, you should expect this to process to take awhile.
+1,000 songs might take 3-5 minutes. Of course, this is only slow the first time. If you do it frequently,
+each time only takes as long as the number of songs you've added to your collection since your last run.
 
 ### How It Works ###
 
@@ -36,5 +39,9 @@ way doesn't require any work for you!
 
 * <b>Won't this totally break if Rdio changes their website layout?</b> Yup.
 
-* <b>Could this erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
+* <b>Could this inadvertently erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
 erased my library when working on this tool. 
+
+* <b>Can I use this to delete songs from my collection or to unsync songs?</b> Yes. At the top of the source, I've
+included options for advanced users. You'll need to download the script and copy it into your Rdio session with
+the desired options.
