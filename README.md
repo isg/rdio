@@ -14,9 +14,10 @@ Simply create a bookmark with the following URL.
 javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/offline.js';t.appendChild(s);})();
 ```
 
-Open your Rdio collection in Chrome and make sure you're listing all songs (the URL should be of the form 
-<i>/people/<i>username</i>/collection/songs/</i>). When the page has loaded, click the
-bookmarklet, sit back and relax, and watch as all of your songs are marked as available offline! 
+Open your Rdio collection in Chrome and make sure you're listing all songs (not albums; the URL should end in `/songs/`). 
+When the page has loaded, click the bookmarklet, sit back and relax, and watch as all of your songs are
+marked as available offline! Note that you can either use the script looking at <i>All Artists</i> or for a specific
+artist.
 
 To throttle the requests my script makes to Rdio, you should expect this to process to take awhile.
 1,000 songs might take 3-5 minutes. Of course, this is only slow the first time. If you do it frequently,
