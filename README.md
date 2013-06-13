@@ -38,5 +38,9 @@ way doesn't require any work for you!
 
 * <b>Won't this totally break if Rdio changes their website layout?</b> Yup.
 
-* <b>Could this erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
+* <b>Could this inadvertently erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
 erased my library when working on this tool. 
+
+* <b>Can I use this to delete songs from my collection or to unsync songs?</b> Yes. At the top of the source, I've
+included options for advanced users. You'll need to download the script and copy it into your Rdio session with
+the desired options.
