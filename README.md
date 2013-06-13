@@ -14,9 +14,27 @@ Simply create a bookmark with the following URL.
 javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/offline.js';t.appendChild(s);})();
 ```
 
-You can name it whatever you want, but <i>Rdio Offline Agent</i> probably works! This is what is known as a 
-<a href="https://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a>. Clicking the bookmark loads an external 
-JavaScript file which executes the script on Rdio's page.
+Open your Rdio collection in Chrome and make sure you're listing all songs (the URL should be of the form 
+<i>/people/<i>username</i>/collection/songs/</i>). When the page has loaded, click the
+bookmarklet, sit back and relax, and watch as all of your songs are marked as available offline! To throttle
+the requests my script makes to Rdio, you should expect this to process to take awhile. 1,000 songs might take
+3-5 minutes.
 
-Navigate to http://www.rdio.com/people/<i>username</i>/collection/songs/. Once the page has loaded, click the
-bookmarklet, sit back and relax, and watch as all of your songs are marked as available offline!
+### How It Works ###
+
+This is what is known as a <a href="https://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a>. Clicking the
+bookmark loads an external JavaScript file which executes the script on Rdio's page. 
+
+The script itself starts by scrolling the page to its entirety in order to load all of your songs in the DOM 
+at once. After doing so, the necessary clicks are simulated in order to make each song as available offline.
+
+### FAQ ###
+
+* <b>Couldn't you use the Rdio API instead of this gross hack?</b> 
+That would require every person who wanted to use this tool to first create a developer account. Doing it this
+way doesn't require any work for you!
+
+* <b>Won't this totally break if Rdio changes their website layout?</b> Yup.
+
+* <b>Could this erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
+erased my library when working on this tool. 
