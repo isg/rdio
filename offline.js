@@ -3,18 +3,18 @@
 // Rdio Offline Agent
 
 (function() {
-    // Default behavior is to mark all unsyncing songs as syncing
+    // Default behavior is to mark all unsyncing songs as syncing...
     var clickSelectorAllRows = ".ActionMenu.pill.dark.in_collection:not(.synced)";
     var clickSelectorSyncButton = "li:contains(Sync to Mobile):eq(0)";
 
     /*
      * WARNING. Uncommenting the following two lines will UNSYNC all songs.
      */
-    clickSelectorSyncButton = "span.delete:eq(1)"
-    clickSelectorAllRows =  ".ActionMenu.pill.dark.in_collection.synced";
+    // clickSelectorSyncButton = "span.delete:eq(1)"
+    // clickSelectorAllRows =  ".ActionMenu.pill.dark.in_collection.synced";
 
     /*
-     * DOUBLE WARNING. Uncommenting the following lines will DELETE all songs
+     * DOUBLE WARNING. Uncommenting the following two lines will DELETE all songs.
      */
     // clickSelectorSyncButton = "span.delete:eq(0)"
     // clickSelectorAllRows =  ".ActionMenu.pill.dark.in_collection";
