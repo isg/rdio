@@ -3,6 +3,12 @@
 // Rdio Offline Agent
 
 (function() {
+    var clickSelectorAllRows = ".ActionMenu.pill.dark.in_collection:not(.synced)";
+    var clickSelectorSyncButton = "li:contains(Sync to Mobile):eq(0)";
+        // "span.delete:eq(0)" to DELETE, "span.delete:eq(1)" to mark as unsyncing
+
+    var numberNotSynced = -1; // For use later
+    var markingInterval = null; // For use later
     // Setup popup display
     var messageBoxWidth = 350;
     var messageBoxHeight = 150;
@@ -61,33 +67,45 @@
             if (++collisions == 10) {
                 clearInterval(loadingInterval);
                 clearInterval(checkingInterval);
-                $("#messageBoxStatus").text("Loading complete. Marking items...");
-                markItems();
+                box.scrollTop(0);
+                numberNotSynced = $(clickSelectorSyncButton).length; // Initialize
+
+                $("#messageBoxStatus").html('Marking items... <span id="marking-percentage">0</span>%<br>This may take some time.');
+
+                markingInterval = setInterval(markItems, 1000);
             }
         } else {
             collisions = 0;
         }
     }
+
     $("#messageBoxStatus").text("Scrolling page to load collection...");
     var loadingInterval = setInterval(loadAllRows, 100);
     var checkingInterval = setInterval(checkLoading, 250);
 
+
+    var totalMarked = 0;
     var markItems = function() {
-        var rows = $(".ActionMenu:not(.synced)");
-        var marked = 0;
+        var rows = $(clickSelectorAllRows).slice(0, 5); // Process 5 at a time
+
+        if (rows.length === 0) {
+            clearInterval(markingInterval);
+            $("#messageBoxStatus").html("Finished marking " + totalMarked + " songs!<br>Closing in 5 seconds...");
+            setTimeout(closePopup, 5000);
+            return;
+        }
+
         rows.each(function() {
             $(this).click();
             $(".Menu").each(function() {
                 if (parseInt($(this).css('top')) > 0 && parseInt($(this).css('left')) > 0) {
-                    var syncToMobile = $($(this).find("li:contains(Sync to Mobile)").first());
+                    var syncToMobile = $($(this).find(clickSelectorSyncButton));
                     syncToMobile.click();
-                    marked++;
+                    totalMarked++;
+                    $("#marking-percentage").text(Math.round(totalMarked/numberNotSynced * 100));
                 }
             });
+            $(".Menu").remove();
         });
-
-        box.scrollTop(0);
-        $("#messageBoxStatus").text("Finished marking " + marked + "songs!<br>Closing in 5 seconds.");
-        setTimeout(closePopup, 5000);
     }
 })();
