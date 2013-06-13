@@ -3,9 +3,21 @@
 // Rdio Offline Agent
 
 (function() {
+    // Default behavior is to mark all unsyncing songs as syncing
     var clickSelectorAllRows = ".ActionMenu.pill.dark.in_collection:not(.synced)";
     var clickSelectorSyncButton = "li:contains(Sync to Mobile):eq(0)";
-        // "span.delete:eq(0)" to DELETE, "span.delete:eq(1)" to mark as unsyncing
+
+    /*
+     * WARNING. Uncommenting the following two lines will UNSYNC all songs.
+     */
+    clickSelectorSyncButton = "span.delete:eq(1)"
+    clickSelectorAllRows =  ".ActionMenu.pill.dark.in_collection.synced";
+
+    /*
+     * DOUBLE WARNING. Uncommenting the following lines will DELETE all songs
+     */
+    // clickSelectorSyncButton = "span.delete:eq(0)"
+    // clickSelectorAllRows =  ".ActionMenu.pill.dark.in_collection";
 
     var numberNotSynced = -1; // For use later
     var markingInterval = null; // For use later
@@ -57,6 +69,8 @@
     }
     var collisions = 0;
     var checkLoading = function() {
+        numberNotSynced = $(clickSelectorAllRows).length; // Initialize
+
         // Check if spinner is not loading and is visible.
         // Occasionally we might happen to check right after a load finishes
         // but before the spinner is sent farther down the page when the DOM
@@ -68,10 +82,8 @@
                 clearInterval(loadingInterval);
                 clearInterval(checkingInterval);
                 box.scrollTop(0);
-                numberNotSynced = $(clickSelectorSyncButton).length; // Initialize
 
                 $("#messageBoxStatus").html('Marking items... <span id="marking-percentage">0</span>%<br>This may take some time.');
-
                 markingInterval = setInterval(markItems, 1000);
             }
         } else {
@@ -90,8 +102,8 @@
 
         if (rows.length === 0) {
             clearInterval(markingInterval);
-            $("#messageBoxStatus").html("Finished marking " + totalMarked + " songs!<br>Closing in 5 seconds...");
-            setTimeout(closePopup, 5000);
+            $("#messageBoxStatus").html("Finished marking " + totalMarked + " songs!<br>Reloading in 5 seconds...");
+            setTimeout(function(){location.reload();}, 5000);
             return;
         }
 
@@ -103,9 +115,9 @@
                     syncToMobile.click();
                     totalMarked++;
                     $("#marking-percentage").text(Math.round(totalMarked/numberNotSynced * 100));
+                    $(this).remove();
                 }
             });
-            $(".Menu").remove();
         });
     }
 })();
