@@ -69,8 +69,6 @@
     }
     var collisions = 0;
     var checkLoading = function() {
-        numberNotSynced = $(clickSelectorAllRows).length; // Initialize
-
         // Check if spinner is not loading and is visible.
         // Occasionally we might happen to check right after a load finishes
         // but before the spinner is sent farther down the page when the DOM
@@ -79,12 +77,14 @@
         // if (spinner.hasClass("loaded") && spinner.offset().top < box.height()) {
         if (oldScrollTop == box.scrollTop()) {
             if (++collisions == 10) {
+                numberNotSynced = $(clickSelectorAllRows).length; // Initialize
+
                 clearInterval(loadingInterval);
                 clearInterval(checkingInterval);
                 box.scrollTop(0);
 
-                $("#messageBoxStatus").html('Marking items... <span id="marking-percentage">0</span>%<br>This may take some time.');
-                markingInterval = setInterval(markItems, 1000);
+                $("#messageBoxStatus").html('Marking items... <span id="marking-percentage">0</span> of ' + numberNotSynced + '<br>This may take some time.');
+                markItems();
             }
         } else {
             collisions = 0;
@@ -95,29 +95,32 @@
     var loadingInterval = setInterval(loadAllRows, 100);
     var checkingInterval = setInterval(checkLoading, 250);
 
-
-    var totalMarked = 0;
     var markItems = function() {
-        var rows = $(clickSelectorAllRows).slice(0, 5); // Process 5 at a time
+        var totalMarked = 0;
+        var rows = $(clickSelectorAllRows);
 
-        if (rows.length === 0) {
-            clearInterval(markingInterval);
-            $("#messageBoxStatus").html("Finished marking " + totalMarked + " songs!<br>Reloading in 5 seconds...");
-            setTimeout(function(){location.reload();}, 5000);
-            return;
+        var processRow = function(rowNum) {
+            if (rowNum === rows.length) {
+                // We're done processing
+                $("#messageBoxStatus").html("Finished marking " + totalMarked + " songs!<br>Reloading in 5 seconds...");
+                setTimeout(function(){location.reload();}, 5000);
+                return;
+            }
+
+            $(rows[rowNum]).click();
+            var syncToMobile = $($(".Menu").first().find(clickSelectorSyncButton));
+            syncToMobile.click();
+            totalMarked++;
+            $("#marking-percentage").text(totalMarked);
+            $(".Menu").remove();
+
+            setTimeout(function(){
+                processRow(totalMarked);
+            }, 250);
         }
 
-        rows.each(function() {
-            $(this).click();
-            $(".Menu").each(function() {
-                if (parseInt($(this).css('top')) > 0 && parseInt($(this).css('left')) > 0) {
-                    var syncToMobile = $($(this).find(clickSelectorSyncButton));
-                    syncToMobile.click();
-                    totalMarked++;
-                    $("#marking-percentage").text(Math.round(totalMarked/numberNotSynced * 100));
-                    $(this).remove();
-                }
-            });
-        });
+        setTimeout(function(){
+            processRow(totalMarked); // Start chain
+        }, 250);
     }
 })();
