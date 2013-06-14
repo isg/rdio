@@ -20,8 +20,8 @@ marked as available offline! Note that you can either use the script looking at 
 artist.
 
 To throttle the requests my script makes to Rdio, you should expect this to process to take awhile.
-1,000 songs might take 3-5 minutes. Of course, this is only slow the first time. If you do it frequently,
-each time only takes as long as the number of songs you've added to your collection since your last run.
+1,000 songs will take about 5 minutes. Of course, the script only updates unsynced songs, so if run it frequently,
+it should run fairly quickly. The page will refresh when it's all done.
 
 ### How It Works ###
 
