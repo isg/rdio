@@ -28,7 +28,7 @@ simply makes requests to Rdio's API on your account's behalf.
 
 ### FAQ ###
 
-* <b>Couldn't you use make a real website using the Rdio API instead of a bookmarklet?</b> 
+* <b>Couldn't you make a real site to do this using the Rdio API instead of a bookmarklet?</b> 
 That would require every person who wanted to use the tool to first create a developer account. Doing it this
 way saves a lot of effort on the part of the user.
 
