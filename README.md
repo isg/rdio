@@ -5,6 +5,7 @@ This script adds desirable (and unfortunately lacking) functionality to the Rdio
 * Mark your entire collection as available offline (sync) in a single click
 * Unmark your entire collection from offline availability in a single click
 * Add the song to which you're currently listening to your collection in a single click
+
 I created this script after spending several hours individually marking every album in my library for offline
 availability. There is now a better way!
 
@@ -15,17 +16,15 @@ Simply create a bookmark with the following URL:
 javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/agent.js';t.appendChild(s);})();
 ```
 
-Visit Rdio in a web browser (tested in Chrome) and click the bookmarklet. You will see that the options in the
-left navigation have increased, giving you the extra tools you need. In a single click, easily sync every song
+Visit Rdio in a web browser (tested in Chrome) and click the bookmarklet. You will see new options magically appear
+in the navigation bar, giving you the extra tools you need. In a single click, easily sync every song
 in your collection.
 
 ### How It Works ###
 
 This is what is known as a <a href="https://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a>. Clicking the
-bookmark loads an external JavaScript file which executes within Rdio's web app.
-
-The script itself simply makes requests to Rdio's API using your account's authentication token (which is 
-accessible since you're logged in and the script executes within the app itself).
+bookmark loads an external JavaScript file which executes within Rdio's web app. The script itself 
+simply makes requests to Rdio's API on your account's behalf.
 
 ### FAQ ###
 
