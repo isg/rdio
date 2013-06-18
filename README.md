@@ -1,47 +1,38 @@
-## Rdio Offline Agent ##
+## Rdio Agent ##
 
 ### Overview ###
-<a href="http://www.rdio.com">Rdio</a> is an awesome music service. Within a few hours of using the service,
-my library grew to well over 1,000 songs. When I attempted to take advantage of Rdio's mobile syncing service --
-so that all of my music would be available on my phone offline -- I was disappointed to discover that I had to
-<b>manually</b> mark each song! I wanted to mark my entire collection as available offline, which would have
-taken hours to do so manually (especially if my library keeps growing). This script takes care of that.
+This script adds desirable (and unfortunately lacking) functionality to the Rdio web app including the following:
+* Mark your entire collection as available offline (sync) in a single click
+* Unmark your entire collection from offline availability in a single click
+* Add the song to which you're currently listening to your collection in a single click
+I created this script after spending several hours individually marking every album in my library for offline
+availability. There is now a better way!
 
 ### Usage ###
-Simply create a bookmark with the following URL.
+Simply create a bookmark with the following URL:
 
 ```javascript
-javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/offline.js';t.appendChild(s);})();
+javascript:(function(){var d=document,s=d.createElement('script'),t=d.body;s.src='https://raw.github.com/isg/rdio/master/agent.js';t.appendChild(s);})();
 ```
 
-Open your Rdio collection in Chrome and make sure you're listing all songs (not albums; the URL should end in `/songs/`). 
-When the page has loaded, click the bookmarklet, sit back and relax, and watch as all of your songs are
-marked as available offline! Note that you can either use the script looking at <i>All Artists</i> or for a specific
-artist.
-
-To throttle the requests my script makes to Rdio, you should expect this to process to take awhile.
-1,000 songs will take about 5 minutes. Of course, the script only updates unsynced songs, so if you run it frequently,
-it should run fairly quickly. The page will refresh when it's all done.
+Visit Rdio in a web browser (tested in Chrome) and click the bookmarklet. You will see that the options in the
+left navigation have increased, giving you the extra tools you need. In a single click, easily sync every song
+in your collection.
 
 ### How It Works ###
 
 This is what is known as a <a href="https://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a>. Clicking the
-bookmark loads an external JavaScript file which executes the script on Rdio's page. 
+bookmark loads an external JavaScript file which executes within Rdio's web app.
 
-The script itself starts by scrolling the page to its entirety in order to load all of your songs in the DOM 
-at once. After doing so, the necessary clicks are simulated in order to make each song as available offline.
+The script itself simply makes requests to Rdio's API using your account's authentication token (which is 
+accessible since you're logged in and the script executes within the app itself).
 
 ### FAQ ###
 
-* <b>Couldn't you use the Rdio API instead of this gross hack?</b> 
-That would require every person who wanted to use this tool to first create a developer account. Doing it this
-way doesn't require any work for you!
+* <b>Couldn't you use make a real website using the Rdio API instead of a bookmarklet?</b> 
+That would require every person who wanted to use the tool to first create a developer account. Doing it this
+way saves a lot of effort on the part of the user.
 
-* <b>Won't this totally break if Rdio changes their website layout?</b> Yup.
+* <b>Will this break if Rdio changes their website layout?</b> Possibly, although it will be easy to fix.
 
-* <b>Could this inadvertently erase my library?</b> I don't think so. But, in the interest of full disclosure: I accidentally 
-erased my library when working on this tool. 
-
-* <b>Can I use this to delete songs from my collection or to unsync songs?</b> Yes. At the top of the source, I've
-included options for advanced users. You'll need to download the script and copy it into your Rdio session with
-the desired options.
+* <b>Could this inadvertently erase my library?</b> No.
