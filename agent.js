@@ -1,4 +1,4 @@
-if (jQuery && R && $(".section.rdioagent").length === 0) {
+if (typeof jQuery !== 'undefined' && typeof R !== 'undefined' && $(".section.rdioagent").length === 0) {
     /*****************************
      *
      * Setup UI
